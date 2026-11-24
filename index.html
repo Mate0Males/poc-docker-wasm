@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>POC Docker + WebAssembly</title>
+</head>
+<body>
+  <h1>POC: Docker + WebAssembly</h1>
+  <p>Resultado de 5 + 7 = <strong id="resultado">cargando...</strong></p>
+
+  <script>
+    fetch('suma.wasm')
+      .then(r => r.arrayBuffer())
+      .then(bytes => WebAssembly.instantiate(bytes))
+      .then(({ instance }) => {
+        document.getElementById('resultado').textContent =
+          instance.exports.suma(5, 7);
+      });
+  </script>
+</body>
+</html>
